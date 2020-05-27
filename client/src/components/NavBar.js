@@ -22,6 +22,9 @@ const NavBar = () => {
           <NavItem>
             <NavLink href="/appointments">Appointments</NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink href="/doctors">Doctors</NavLink>
+          </NavItem>
         </Nav>
       </Navbar>
     </header>

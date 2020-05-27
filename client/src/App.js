@@ -11,6 +11,7 @@ import {
   NavLink,
   Switch,
 } from "react-router-dom";
+import Doctors from "./components/DoctorsList/Doctors";
 
 class App extends Component {
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/appointments" component={Appoiments} />
             <Route path="/login" component={Login} />
+            <Route path="/doctors" component={Doctors} />
           </Switch>
 
           <Footer />
