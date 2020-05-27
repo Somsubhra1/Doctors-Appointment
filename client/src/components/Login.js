@@ -1,9 +1,23 @@
 import React, { Component } from "react";
 
 export default class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      password: "",
+    };
+  }
+
+  submitLoginForm = (e) => {
+    e.preventDefault();
+    console.log("Login submitted");
+  };
+
   render() {
     return (
-      <form className="container mt-4">
+      <form className="container mt-4" onSubmit={this.submitLoginForm}>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
           <input
@@ -12,6 +26,8 @@ export default class Login extends Component {
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             placeholder="Enter email"
+            onChange={(e) => this.setState({ email: e.target.value })}
+            value={this.state.email}
           />
           <small id="emailHelp" className="form-text text-muted">
             We'll never share your email with anyone else.
@@ -24,6 +40,8 @@ export default class Login extends Component {
             className="form-control"
             id="exampleInputPassword1"
             placeholder="Password"
+            onChange={(e) => this.setState({ password: e.target.value })}
+            value={this.state.password}
           />
         </div>
         <div className="form-group form-check">
