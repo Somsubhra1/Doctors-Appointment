@@ -1,33 +1,56 @@
 import React from "react";
 import logo from "../logo.svg";
-import { Navbar, NavbarBrand, NavItem, Nav, NavLink } from "reactstrap";
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <header>
-      <Navbar color="dark">
-        <NavbarBrand href="/" className="text-white">
-          <img
-            src={logo}
-            height="48"
-            className="d-inline-block align-center"
-            alt="logo"
-          />{" "}
-          Doctor Appointments
-        </NavbarBrand>
-        <Nav className="mr-auto">
-          <NavItem>
-            <NavLink href="/login/">Login</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/appointments">Appointments</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/doctors">Doctors</NavLink>
-          </NavItem>
-        </Nav>
-      </Navbar>
-    </header>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <NavLink className="navbar-brand" to="/">
+        <img
+          src={logo}
+          width="50"
+          height="50"
+          className="d-inline-block mr-2"
+          alt=""
+        />
+        Doctors Appointment
+      </NavLink>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarNav">
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/">
+              Home 
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/login">
+              Login
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/doctors">
+              Doctors
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/appointments">
+              Appointments
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+    </nav>
   );
 };
 

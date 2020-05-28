@@ -5,15 +5,23 @@ import Appoiments from "./components/Appointments/";
 import Home from "./components/Home";
 import Login from "./components/Login";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  NavLink,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Doctors from "./components/DoctorsList/Doctors";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: "",
+      name: ""
+    };
+  }
+
+  setUsername = (username) => {
+    this.setState({ username });
+  };
+
   render() {
     return (
       <>
@@ -23,8 +31,11 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/appointments" component={Appoiments} />
-            <Route path="/login" component={Login} />
-            <Route path="/doctors" component={Doctors} />
+            <Route
+              path="/login"
+              render={() => <Login setUsername={this.setUsername} />}
+            />
+            <Route path="/doctors" render={() => <Doctors  />} />
           </Switch>
 
           <Footer />

@@ -26,11 +26,14 @@ const ListAppointments = ({ appointments, onDelete }) => {
               </Media>
               <Media body>
                 <Media heading className="m-0">
-                  {item.patientName}
+                  {item.doctorName}
                 </Media>
                 <p className="mt-4 mb-0">
+                  <span className="font-weight-bold">Patient Name:</span>{" "}
+                  {item.patientName}{" "}
+                  <br/>
                   <span className="font-weight-bold">Age:</span>{" "}
-                  {item.patientAge}{" "}
+                  {item.patientAge} <br />
                   <span className="font-weight-bold">Gender:</span>{" "}
                   {item.gender}
                 </p>

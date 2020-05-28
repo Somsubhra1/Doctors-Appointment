@@ -12,7 +12,8 @@ export default class Login extends Component {
 
   submitLoginForm = (e) => {
     e.preventDefault();
-    console.log("Login submitted");
+    // console.log("Login submitted", this.props.test);
+    this.props.setUsername(this.state.email);
   };
 
   render() {
@@ -23,25 +24,22 @@ export default class Login extends Component {
           <input
             type="email"
             className="form-control"
-            id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            placeholder="Enter email"
+            placeholder="Email"
             onChange={(e) => this.setState({ email: e.target.value })}
             value={this.state.email}
+            required
           />
-          <small id="emailHelp" className="form-text text-muted">
-            We'll never share your email with anyone else.
-          </small>
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputPassword1">Password</label>
           <input
             type="password"
             className="form-control"
-            id="exampleInputPassword1"
             placeholder="Password"
             onChange={(e) => this.setState({ password: e.target.value })}
             value={this.state.password}
+            required
           />
         </div>
         <div className="form-group form-check">
@@ -51,7 +49,7 @@ export default class Login extends Component {
             id="exampleCheck1"
           />
           <label className="form-check-label" htmlFor="exampleCheck1">
-            Check me out
+            Remember Me
           </label>
         </div>
         <button type="submit" className="btn btn-primary">

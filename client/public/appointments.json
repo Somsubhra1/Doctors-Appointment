@@ -3,6 +3,7 @@
     "id": 1466416800000,
     "patientName": "John",
     "patientAge": 24,
+    "doctorName": "Dr. Smith",
     "gender": "Male",
     "aptDate": "2018-12-20 15:30",
     "aptNotes": "Viral fever"
@@ -10,6 +11,7 @@
   {
     "id": 1466737200000,
     "patientName": "Alex",
+    "doctorName": "Dr. Max",
     "patientAge": 47,
     "gender": "Male",
     "aptDate": "2018-12-24 08:30",
@@ -19,6 +21,7 @@
     "id": 1466590800000,
     "patientName": "Scotty",
     "patientAge": 30,
+    "doctorName": "Dr. Bob",
     "gender": "Female",
     "aptDate": "2018-11-22 15:50",
     "aptNotes": "Fever and headache"
@@ -27,6 +30,7 @@
     "id": 1466480700000,
     "patientName": "Michel",
     "patientAge": 61,
+    "doctorName": "Dr. Hanna",
     "gender": "Male",
     "aptDate": "2018-12-21 9:15",
     "aptNotes": "Loose motion"

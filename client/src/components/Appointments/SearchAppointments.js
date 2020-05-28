@@ -37,11 +37,12 @@ class SearchAppointments extends React.Component {
       <InputGroup className="mb-3">
         <Input
           id="searchField"
-          placeholder="Search appointments by patient name"
+          placeholder="Search appointments by Doctor's name"
           type="text"
           className="form-control"
           onChange={this.handleSearch}
         />
+        {/*
         <InputGroupButtonDropdown
           addonType="append"
           isOpen={this.state.dropdownOpen}
@@ -84,6 +85,7 @@ class SearchAppointments extends React.Component {
             </DropdownItem>
           </DropdownMenu>
         </InputGroupButtonDropdown>
+              */}
       </InputGroup>
     );
   }

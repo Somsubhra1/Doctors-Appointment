@@ -18,7 +18,7 @@ class Appointments extends Component {
   }
 
   componentDidMount() {
-    fetch("./data.json")
+    fetch("./appointments.json")
       .then((res) => res.json())
       .then((data) =>
         this.setState({
@@ -67,7 +67,7 @@ class Appointments extends Component {
     let { orderBy, orderDir, searchText, appointments } = this.state;
 
     appointments.forEach((item) => {
-      if (item.patientName.toLowerCase().indexOf(searchText) !== -1) {
+      if (item.doctorName.toLowerCase().indexOf(searchText) !== -1) {
         filteredApts.push(item);
       }
     });
@@ -76,8 +76,8 @@ class Appointments extends Component {
 
     return (
       <>
-        <Container>
-          <AddAppointments saveApt={this.saveAppointment} />
+        <Container className="mt-4">
+          {/*<AddAppointments saveApt={this.saveAppointment} />*/}
           <SearchAppointments
             sort={this.sort}
             search={this.search}
