@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 export default class Login extends Component {
   constructor(props) {
@@ -7,6 +8,7 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      toAppointments: false,
     };
   }
 
@@ -14,9 +16,13 @@ export default class Login extends Component {
     e.preventDefault();
     // console.log("Login submitted", this.props.test);
     this.props.setUsername(this.state.email);
+    this.setState({ toAppointments: true });
   };
 
   render() {
+    if (this.state.toAppointments) {
+      return <Redirect to="/appointments" />;
+    }
     return (
       <form className="container mt-4" onSubmit={this.submitLoginForm}>
         <div className="form-group">
