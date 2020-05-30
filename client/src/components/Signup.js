@@ -16,8 +16,6 @@ export default class Signup extends Component {
 
   submitSignupForm = (e) => {
     e.preventDefault();
-    // console.log("Login submitted", this.props.test);
-    // this.props.setUsername(this.state.email);
     this.setState({ toLogin: true });
   };
 
@@ -63,7 +61,7 @@ export default class Signup extends Component {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="exampleInputPassword1">Password</label>
+          <label htmlFor="exampleInputPassword1">Confirm Password</label>
           <input
             type="password"
             className="form-control"

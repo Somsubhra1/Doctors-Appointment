@@ -30,7 +30,6 @@ export default class Login extends Component {
           <input
             type="email"
             className="form-control"
-            aria-describedby="emailHelp"
             placeholder="Email"
             onChange={(e) => this.setState({ email: e.target.value })}
             value={this.state.email}
