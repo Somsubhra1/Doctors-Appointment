@@ -38,7 +38,7 @@ router.post("/signup", (req, res) => {
             // Storing to db
             newUser
               .save()
-              .then((user) => res.json(user))
+              .then(({ email, name, id }) => res.json({ email, name, id }))
               // Error saving to db
               .catch((err) => console.log(err));
           });
