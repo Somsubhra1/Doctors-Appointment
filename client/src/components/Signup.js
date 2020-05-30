@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import axios from "axios";
 
 export default class Signup extends Component {
   constructor(props) {
@@ -14,9 +15,28 @@ export default class Signup extends Component {
     };
   }
 
-  submitSignupForm = (e) => {
+  submitSignupForm = async (e) => {
     e.preventDefault();
-    this.setState({ toLogin: true });
+
+    if (this.state.password1 !== this.state.password2) {
+      document.getElementById("alert").classList.remove("d-none");
+      document.getElementById("alert").innerText = "Passwords don't match";
+      return;
+    }
+
+    try {
+      const { name, email, password1 } = this.state;
+      await axios.post("/auth/signup", {
+        name,
+        email,
+        password: password1,
+      });
+      alert("Login now");
+      this.setState({ toLogin: true });
+    } catch (error) {
+      document.getElementById("alert").classList.remove("d-none");
+      document.getElementById("alert").innerText = error.response.data.error;
+    }
   };
 
   render() {
@@ -25,6 +45,12 @@ export default class Signup extends Component {
     }
     return (
       <form className="container mt-4" onSubmit={this.submitSignupForm}>
+        <div
+          className="alert alert-danger d-none"
+          id="alert"
+          ref="alert"
+          role="alert"
+        ></div>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Name</label>
           <input
