@@ -9,7 +9,7 @@ const AppointmentModal = (props) => {
 
   const submitAppointmentForm = (e) => {
     e.preventDefault();
-    console.log("World");
+    console.log("Works");
   };
 
   return (
@@ -60,6 +60,8 @@ const AppointmentModal = (props) => {
                 required
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
+                max="100"
+                min="1"
               />
             </div>
             <div className="form-group">
