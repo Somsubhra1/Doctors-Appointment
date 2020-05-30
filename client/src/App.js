@@ -14,13 +14,12 @@ class App extends Component {
     super(props);
 
     this.state = {
-      username: "",
-      name: "",
+      user: {},
     };
   }
 
-  setUsername = (username) => {
-    this.setState({ username });
+  setUser = (user) => {
+    this.setState({ user });
   };
 
   render() {
@@ -34,13 +33,13 @@ class App extends Component {
             <Route path="/signup" component={Signup} />
             <Route
               path="/login"
-              render={() => <Login setUsername={this.setUsername} />}
+              render={() => <Login setUser={this.setUser} />}
             />
+            <Route path="/appointments" render={() => <Appoiments />} />
             <Route
-              path="/appointments"
-              render={() => <Appoiments  />}
+              path="/doctors"
+              render={() => <Doctors email={this.state.user.email} />}
             />
-            <Route path="/doctors" render={() => <Doctors email={this.state.username}/>} />
           </Switch>
 
           <Footer />

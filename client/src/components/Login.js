@@ -15,7 +15,7 @@ export default class Login extends Component {
   submitLoginForm = (e) => {
     e.preventDefault();
     // console.log("Login submitted", this.props.test);
-    this.props.setUsername(this.state.email);
+    this.props.setUser({ email: this.state.email, name: "abs", id: 1 });
     this.setState({ toAppointments: true });
   };
 
