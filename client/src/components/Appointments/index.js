@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import { Container } from "reactstrap";
-import AddAppointments from "./AddAppointments";
+// import AddAppointments from "./AddAppointments";
 import SearchAppointments from "./SearchAppointments";
 import ListAppointments from "./ListAppointments";
 

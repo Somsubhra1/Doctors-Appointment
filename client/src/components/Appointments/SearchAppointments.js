@@ -1,11 +1,11 @@
 import React from "react";
 import {
   InputGroup,
-  InputGroupButtonDropdown,
+  // InputGroupButtonDropdown,
   Input,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
+  // DropdownToggle,
+  // DropdownMenu,
+  // DropdownItem,
 } from "reactstrap";
 
 class SearchAppointments extends React.Component {

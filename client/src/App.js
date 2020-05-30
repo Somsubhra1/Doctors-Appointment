@@ -7,6 +7,7 @@ import Login from "./components/Login";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Doctors from "./components/DoctorsList/Doctors";
+import Signup from "./components/Signup";
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class App extends Component {
 
     this.state = {
       username: "",
-      name: ""
+      name: "",
     };
   }
 
@@ -31,11 +32,12 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/appointments" component={Appoiments} />
+            <Route path="/signup" component={Signup} />
             <Route
               path="/login"
               render={() => <Login setUsername={this.setUsername} />}
             />
-            <Route path="/doctors" render={() => <Doctors  />} />
+            <Route path="/doctors" render={() => <Doctors />} />
           </Switch>
 
           <Footer />
