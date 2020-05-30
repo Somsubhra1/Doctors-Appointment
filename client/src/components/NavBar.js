@@ -2,7 +2,54 @@ import React from "react";
 import logo from "../logo.svg";
 import { NavLink } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
+  const guestLinks = (
+    <React.Fragment>
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <NavLink exact className="nav-link" to="/">
+            Home
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/signup">
+            SignUp
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/login">
+            Login
+          </NavLink>
+        </li>
+      </ul>
+    </React.Fragment>
+  );
+
+  const userLinks = (
+    <React.Fragment>
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <NavLink exact className="nav-link" to="/">
+            Home
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/doctors">
+            Doctors
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/appointments">
+            Appointments
+          </NavLink>
+        </li>
+      </ul>
+      {/* TODO: Add logout route */}
+      <a href="/logout" className="btn btn-danger ml-auto mr-4" type="submit">
+        Logout
+      </a>
+    </React.Fragment>
+  );
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <NavLink className="navbar-brand" to="/">
@@ -27,33 +74,7 @@ const NavBar = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <NavLink exact className="nav-link" to="/">
-              Home
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/signup">
-              SignUp
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/login">
-              Login
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/doctors">
-              Doctors
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/appointments">
-              Appointments
-            </NavLink>
-          </li>
-        </ul>
+        {user.email ? userLinks : guestLinks}
       </div>
     </nav>
   );

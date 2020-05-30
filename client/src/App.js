@@ -26,7 +26,7 @@ class App extends Component {
     return (
       <>
         <Router>
-          <NavBar />
+          <NavBar user={this.state.user} />
 
           <Switch>
             <Route exact path="/" component={Home} />
