@@ -9,11 +9,11 @@ const key = process.env.secret;
 
 const router = express.Router();
 
+// /auth/signup route : POST
 router.post("/signup", (req, res) => {
   const { name, email, password } = req.body;
 
   User.findOne({ email })
-    // even if the collection is not found it enters then() part not catch() part
     .then((user) => {
       if (user) {
         // user already present error
@@ -49,6 +49,7 @@ router.post("/signup", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// /auth/login route : POST
 router.post("/login", (req, res) => {
   // const email = req.body.email;
   // const password = req.body.password;
@@ -60,7 +61,7 @@ router.post("/login", (req, res) => {
       if (!user) {
         return res
           .status(404)
-          .json({ emailerror: "User not found with this email" });
+          .json({ emailerror: "Username or Password is not correct" });
       }
       // comparing hashed password from db with the user entered password
       bcrypt
@@ -72,8 +73,6 @@ router.post("/login", (req, res) => {
               id: user.id,
               name: user.name,
               email: user.email,
-              gender: user.gender,
-              profilepic: user.profilepic,
             };
             // Signing jwt token
             jsonwt.sign(payload, key, { expiresIn: 3600 }, (err, token) => {
@@ -91,7 +90,7 @@ router.post("/login", (req, res) => {
           } else {
             // Password didn't match
             res.status(400).json({
-              error: "Password is not correct",
+              error: "Username or Password is not correct",
             });
           }
         })
@@ -102,16 +101,25 @@ router.post("/login", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// /auth/profile route : POST (Authenticated)
 router.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // console.log(req);
     res.json({
       id: req.user.id,
       name: req.user.name,
       email: req.user.email,
     });
+  }
+);
+
+// /auth/logout route : POST (Authenticated)
+router.get(
+  "/logout",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    req.logout();
   }
 );
 
