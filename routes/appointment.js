@@ -6,7 +6,7 @@ const Appointment = require("../models/Appointments");
 const router = express.Router();
 
 router.get(
-  "/",
+  "/list",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Appointment.find({ user: req.user.id })
@@ -55,10 +55,14 @@ router.delete(
           appointment
             .remove()
             .then(() => res.json({ success: true }))
-            .catch((err) => console.log(err));
+            .catch((err) =>
+              res.status(404).json({ error: "Error deleting appointment" })
+            );
         }
       })
-      .catch((err) => console.log("No such question: " + err));
+      .catch((err) =>
+        res.status(404).json({ error: "Error deleting appointment" })
+      );
   }
 );
 
