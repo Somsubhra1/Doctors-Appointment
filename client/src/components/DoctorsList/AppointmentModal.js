@@ -87,6 +87,7 @@ const AppointmentModal = (props) => {
                 rows="3"
                 value={illness}
                 onChange={(e) => setIllness(e.target.value)}
+                placeholder="Describe your illness with symptoms"
               ></textarea>
             </div>
             <button type="submit" className="btn btn-success">
