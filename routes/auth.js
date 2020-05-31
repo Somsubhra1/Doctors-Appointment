@@ -61,7 +61,7 @@ router.post("/login", (req, res) => {
       if (!user) {
         return res
           .status(404)
-          .json({ emailerror: "Username or Password is not correct" });
+          .json({ error: "Username or Password is not correct" });
       }
       // comparing hashed password from db with the user entered password
       bcrypt
@@ -84,6 +84,9 @@ router.post("/login", (req, res) => {
                 res.json({
                   success: true,
                   token: "Bearer " + token,
+                  id: payload.id,
+                  name: payload.name,
+                  email: payload.email,
                 });
               }
             });
@@ -120,6 +123,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     req.logout();
+    return res.json({ success: true });
   }
 );
 
