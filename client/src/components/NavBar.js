@@ -1,8 +1,24 @@
 import React from "react";
 import logo from "../logo.svg";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
-const NavBar = ({ user }) => {
+const NavBar = ({ user, setUser }) => {
+  const logout = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: user.token,
+        },
+      };
+      const res = await axios.get("/auth/logout", config);
+      if (!res.data.success) {
+        return;
+      }
+      setUser({});
+      localStorage.removeItem("doctorsAppointmentUser");
+    } catch (error) {}
+  };
   const guestLinks = (
     <React.Fragment>
       <ul className="navbar-nav">
@@ -43,11 +59,20 @@ const NavBar = ({ user }) => {
             Appointments
           </NavLink>
         </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="#">
+            Welcome {user.name}
+          </NavLink>
+        </li>
       </ul>
-      {/* TODO: Add logout route */}
-      <a href="/logout" className="btn btn-danger ml-auto mr-4" type="submit">
+      <NavLink
+        className="btn btn-danger ml-auto mr-4"
+        type="button"
+        onClick={logout}
+        to="/"
+      >
         Logout
-      </a>
+      </NavLink>
     </React.Fragment>
   );
   return (

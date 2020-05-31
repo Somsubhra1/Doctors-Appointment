@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import axios from "axios";
 
 export default class Login extends Component {
   constructor(props) {
@@ -12,11 +13,22 @@ export default class Login extends Component {
     };
   }
 
-  submitLoginForm = (e) => {
+  submitLoginForm = async (e) => {
     e.preventDefault();
+    const { email, password } = this.state;
+
     // console.log("Login submitted", this.props.test);
-    this.props.setUser({ email: this.state.email, name: "abs", id: 1 });
-    this.setState({ toAppointments: true });
+    try {
+      const res = await axios.post("/auth/login", { email, password });
+      const { name, id, token } = res.data;
+      const user = { email, name, id, token };
+      localStorage.setItem("doctorsAppointmentUser", JSON.stringify(user));
+      this.props.setUser(user);
+      this.setState({ toAppointments: true });
+    } catch (error) {
+      document.getElementById("alert").classList.remove("d-none");
+      document.getElementById("alert").innerText = error.response.data.error;
+    }
   };
 
   render() {
@@ -25,6 +37,14 @@ export default class Login extends Component {
     }
     return (
       <form className="container mt-4" onSubmit={this.submitLoginForm}>
+        <div
+          className="alert alert-danger d-none"
+          id="alert"
+          ref="alert"
+          role="alert"
+        >
+          hi
+        </div>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
           <input

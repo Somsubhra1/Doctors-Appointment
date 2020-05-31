@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Doctors from "./components/DoctorsList/Doctors";
 import Signup from "./components/Signup";
+import axios from "axios";
 
 class App extends Component {
   constructor(props) {
@@ -22,11 +23,34 @@ class App extends Component {
     this.setState({ user });
   };
 
+  async componentWillMount() {
+    if (!localStorage.getItem("doctorsAppointmentUser")) {
+      return;
+    }
+    const config = {
+      headers: {
+        Authorization: JSON.parse(
+          localStorage.getItem("doctorsAppointmentUser")
+        ).token,
+      },
+    };
+    try {
+      const res = await axios.get("/auth/profile", config);
+      const { email, id, name } = res.data;
+      const token = JSON.parse(localStorage.getItem("doctorsAppointmentUser"))
+        .token;
+
+      this.setUser({ email, id, name, token });
+    } catch (error) {
+      
+    }
+  }
+
   render() {
     return (
       <>
         <Router>
-          <NavBar user={this.state.user} />
+          <NavBar user={this.state.user} setUser={this.setUser} />
 
           <Switch>
             <Route exact path="/" component={Home} />
