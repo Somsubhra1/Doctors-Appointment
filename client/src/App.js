@@ -23,7 +23,7 @@ class App extends Component {
     this.setState({ user });
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     if (!localStorage.getItem("doctorsAppointmentUser")) {
       return;
     }
@@ -41,9 +41,7 @@ class App extends Component {
         .token;
 
       this.setUser({ email, id, name, token });
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 
   render() {
@@ -54,15 +52,22 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/signup" component={Signup} />
+            <Route path="/signup" render={() => (<Signup user={this.state.user} />)} />
             <Route
               path="/login"
-              render={() => <Login setUser={this.setUser} />}
+              render={() => (
+                <Login user={this.state.user} setUser={this.setUser} />
+              )}
             />
-            <Route path="/appointments" render={() => <Appoiments />} />
+            <Route
+              path="/appointments"
+              render={() => <Appoiments user={this.state.user} />}
+            />
             <Route
               path="/doctors"
-              render={() => <Doctors email={this.state.user.email} />}
+              render={() => (
+                <Doctors user={this.state.user} email={this.state.user.email} />
+              )}
             />
           </Switch>
 
