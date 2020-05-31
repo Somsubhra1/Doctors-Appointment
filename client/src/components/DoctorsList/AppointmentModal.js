@@ -7,6 +7,7 @@ const AppointmentModal = (props) => {
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState("Select Gender");
   const [illness, setIllness] = useState("");
+  const [appointmentDate, setAppointmentDate] = useState("");
 
   const submitAppointmentForm = (e) => {
     e.preventDefault();
@@ -77,6 +78,18 @@ const AppointmentModal = (props) => {
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="exampleInputEmail1">Date of Appointment</label>
+              <input
+                type="date"
+                className="form-control"
+                value={appointmentDate}
+                onChange={(e) => setAppointmentDate(e.target.value)}
+              />
+              <small id="emailHelp" className="form-text text-muted">
+                We'll never share your email with anyone else.
+              </small>
             </div>
             <div className="form-group">
               <label htmlFor="exampleFormControlTextarea1">
