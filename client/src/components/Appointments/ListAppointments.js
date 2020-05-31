@@ -12,13 +12,13 @@ const ListAppointments = ({ appointments, onDelete }) => {
           <li
             className="p-1 card-border shadow-sm p-3 mb-3 bg-white rounded"
             style={{ borderRadius: "0.25rem" }}
-            key={item.id}
+            key={item._id}
           >
             <Media>
               <Media left top>
                 <Button color="danger" className="mr-3 delete-btn">
                   <i
-                    id={item.id}
+                    id={item._id}
                     onClick={handleDelete}
                     className="fas fa-times"
                   ></i>
@@ -30,20 +30,19 @@ const ListAppointments = ({ appointments, onDelete }) => {
                 </Media>
                 <p className="mt-4 mb-0">
                   <span className="font-weight-bold">Patient Name:</span>{" "}
-                  {item.patientName}{" "}
-                  <br/>
-                  <span className="font-weight-bold">Age:</span>{" "}
-                  {item.patientAge} <br />
+                  {item.patientName} <br />
+                  <span className="font-weight-bold">Age:</span> {item.age}{" "}
+                  <br />
                   <span className="font-weight-bold">Gender:</span>{" "}
                   {item.gender}
                 </p>
                 <p>
                   <span className="font-weight-bold">Problem:</span>{" "}
-                  {item.aptNotes}
+                  {item.description}
                 </p>
                 <p className="mb-0">
                   <span className="font-weight-bold">Checkup time:</span>{" "}
-                  {new Date(item.aptDate).toUTCString()}
+                  {item.date}
                 </p>
               </Media>
             </Media>

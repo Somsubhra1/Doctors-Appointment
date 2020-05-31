@@ -4,6 +4,7 @@ import { Container } from "reactstrap";
 // import AddAppointments from "./AddAppointments";
 import SearchAppointments from "./SearchAppointments";
 import ListAppointments from "./ListAppointments";
+import axios from "axios";
 
 class Appointments extends Component {
   constructor(props) {
@@ -17,17 +18,16 @@ class Appointments extends Component {
     };
   }
 
-  componentDidMount() {
-    fetch("./appointments.json")
-      .then((res) => res.json())
-      .then((data) =>
-        this.setState({
-          appointments: data,
-        })
-      )
-      .catch((error) =>
-        console.log("There has been a problem with fetching appointments.")
-      );
+  async componentDidMount() {
+    try {
+      const config = {
+        headers: {
+          Authorization: this.props.user.token,
+        },
+      };
+      const res = await axios.get("/appointments/list", config);
+      this.setState({ appointments: res.data });
+    } catch (error) {}
   }
 
   saveAppointment = (newAppointment) => {
@@ -37,16 +37,29 @@ class Appointments extends Component {
       appointments: apts,
     });
   };
-  deleteAppointment = (aptId) => {
-    let apts = this.state.appointments;
-    let aptToDelete = _.find(
-      apts,
-      _.matchesProperty("id", parseInt(aptId, 10))
-    );
-    const newApts = _.without(apts, aptToDelete);
-    this.setState({
-      appointments: newApts,
-    });
+  deleteAppointment = async (aptId) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: this.props.user.token,
+        },
+      };
+      const res = await axios.delete(`/appointments/delete/${aptId}`, config);
+
+      const { success } = res.data;
+
+      if (success) {
+        let apts = this.state.appointments;
+        let aptToDelete = _.find(apts, _.matchesProperty("_id", aptId));
+        const newApts = _.without(apts, aptToDelete);
+        this.setState({
+          appointments: newApts,
+        });
+      }
+    } catch (error) {
+      document.getElementById("alert").classList.remove("d-none");
+      document.getElementById("alert").innerText = error.response.data.error;
+    }
   };
 
   sort = (orderBy, orderDir) => {
@@ -77,6 +90,12 @@ class Appointments extends Component {
     return (
       <>
         <Container className="mt-4">
+          <div
+            className="alert alert-danger d-none"
+            id="alert"
+            ref="alert"
+            role="alert"
+          ></div>
           {/*<AddAppointments saveApt={this.saveAppointment} />*/}
           <SearchAppointments
             sort={this.sort}
@@ -84,10 +103,14 @@ class Appointments extends Component {
             orderBy={this.state.orderBy}
             orderDir={this.state.orderDir}
           />
-          <ListAppointments
-            appointments={filteredApts}
-            onDelete={this.deleteAppointment}
-          />
+          {this.state.appointments.length === 0 ? (
+            <h3 className="mt-4">No appointments found</h3>
+          ) : (
+            <ListAppointments
+              appointments={filteredApts}
+              onDelete={this.deleteAppointment}
+            />
+          )}
         </Container>
       </>
     );

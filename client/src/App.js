@@ -85,7 +85,7 @@ class App extends Component {
               path="/appointments"
               render={() =>
                 Object.keys(this.state.user).length !== 0 ? (
-                  <Appoiments />
+                  <Appoiments user={this.state.user} />
                 ) : (
                   <Redirect to="/login" />
                 )
