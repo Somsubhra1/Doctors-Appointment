@@ -5,7 +5,12 @@ import Appoiments from "./components/Appointments/";
 import Home from "./components/Home";
 import Login from "./components/Login";
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import Doctors from "./components/DoctorsList/Doctors";
 import Signup from "./components/Signup";
 import axios from "axios";
@@ -52,7 +57,16 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/signup" render={() => (<Signup user={this.state.user} />)} />
+            <Route
+              path="/signup"
+              render={() =>
+                Object.keys(this.state.user).length === 0 ? (
+                  <Signup />
+                ) : (
+                  <Redirect to="/appointments" />
+                )
+              }
+            />
             <Route
               path="/login"
               render={() => (

@@ -40,10 +40,6 @@ export default class Signup extends Component {
   };
 
   render() {
-    if (Object.keys(this.props.user).length !== 0) {
-      return <Redirect to="/appointments" />;
-    }
-
     if (this.state.toLogin) {
       return <Redirect to="/login" />;
     }

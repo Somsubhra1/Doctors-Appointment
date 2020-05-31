@@ -43,7 +43,6 @@ export default class Login extends Component {
           ref="alert"
           role="alert"
         >
-          hi
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
