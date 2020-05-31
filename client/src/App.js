@@ -46,7 +46,11 @@ class App extends Component {
         .token;
 
       this.setUser({ email, id, name, token });
-    } catch (error) {}
+    } catch (error) {
+      if (error.response.status === 401) {
+        localStorage.removeItem("doctorsAppointmentUser");
+      }
+    }
   }
 
   render() {
@@ -69,19 +73,33 @@ class App extends Component {
             />
             <Route
               path="/login"
-              render={() => (
-                <Login user={this.state.user} setUser={this.setUser} />
-              )}
+              render={() =>
+                Object.keys(this.state.user).length === 0 ? (
+                  <Login setUser={this.setUser} />
+                ) : (
+                  <Redirect to="/appointments" />
+                )
+              }
             />
             <Route
               path="/appointments"
-              render={() => <Appoiments user={this.state.user} />}
+              render={() =>
+                Object.keys(this.state.user).length !== 0 ? (
+                  <Appoiments />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
             />
             <Route
               path="/doctors"
-              render={() => (
-                <Doctors user={this.state.user} email={this.state.user.email} />
-              )}
+              render={() =>
+                Object.keys(this.state.user).length !== 0 ? (
+                  <Doctors email={this.state.user.email} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
             />
           </Switch>
 

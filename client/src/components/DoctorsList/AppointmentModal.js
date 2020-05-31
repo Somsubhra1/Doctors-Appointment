@@ -6,6 +6,7 @@ const AppointmentModal = (props) => {
   const [patientName, setPatientName] = useState("");
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState("Select Gender");
+  const [illness, setIllness] = useState("");
 
   const submitAppointmentForm = (e) => {
     e.preventDefault();
@@ -76,6 +77,17 @@ const AppointmentModal = (props) => {
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="exampleFormControlTextarea1">
+                Describe your illness
+              </label>
+              <textarea
+                className="form-control"
+                rows="3"
+                value={illness}
+                onChange={(e) => setIllness(e.target.value)}
+              ></textarea>
             </div>
             <button type="submit" className="btn btn-success">
               Make Appointment
