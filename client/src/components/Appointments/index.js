@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import { Container } from "reactstrap";
+import { Container, Spinner } from "reactstrap";
 // import AddAppointments from "./AddAppointments";
 import SearchAppointments from "./SearchAppointments";
 import ListAppointments from "./ListAppointments";
@@ -15,6 +15,7 @@ class Appointments extends Component {
       orderBy: "patientName",
       orderDir: "asc",
       searchText: "",
+      loaded: false,
     };
   }
 
@@ -26,7 +27,7 @@ class Appointments extends Component {
         },
       };
       const res = await axios.get("/appointments/list", config);
-      this.setState({ appointments: res.data });
+      this.setState({ appointments: res.data, loaded: true });
     } catch (error) {}
   }
 
@@ -86,6 +87,30 @@ class Appointments extends Component {
     });
 
     filteredApts = _.orderBy(filteredApts, orderBy, orderDir);
+
+    if (!this.state.loaded) {
+      return (
+        <React.Fragment>
+          <Container
+            className="mt-4"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              height: "50vh",
+              alignItems: "center",
+            }}
+          >
+            <Spinner
+              animation="border"
+              role="status"
+              style={{ width: "3rem", height: "3rem" }}
+            >
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </Container>
+        </React.Fragment>
+      );
+    }
 
     return (
       <>
