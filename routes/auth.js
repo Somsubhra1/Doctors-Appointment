@@ -11,7 +11,7 @@ const router = express.Router();
 
 // /auth/signup route : POST
 router.post("/signup", (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, isAdmin } = req.body;
 
   User.findOne({ email })
     .then((user) => {
@@ -24,6 +24,7 @@ router.post("/signup", (req, res) => {
           name,
           email,
           password,
+          isAdmin,
         });
 
         // Encrypting password using bcryptjs
@@ -38,7 +39,9 @@ router.post("/signup", (req, res) => {
             // Storing to db
             newUser
               .save()
-              .then(({ email, name, id }) => res.json({ email, name, id }))
+              .then(({ email, name, id, isAdmin }) =>
+                res.json({ email, name, id, isAdmin })
+              )
               // Error saving to db
               .catch((err) => console.log(err));
           });
@@ -73,6 +76,7 @@ router.post("/login", (req, res) => {
               id: user.id,
               name: user.name,
               email: user.email,
+              isAdmin: user.isAdmin,
             };
             // Signing jwt token
             jsonwt.sign(payload, key, { expiresIn: 3600 }, (err, token) => {
@@ -87,6 +91,7 @@ router.post("/login", (req, res) => {
                   id: payload.id,
                   name: payload.name,
                   email: payload.email,
+                  isAdmin: payload.isAdmin,
                 });
               }
             });
@@ -113,6 +118,7 @@ router.get(
       id: req.user.id,
       name: req.user.name,
       email: req.user.email,
+      isAdmin: req.user.isAdmin,
     });
   }
 );
