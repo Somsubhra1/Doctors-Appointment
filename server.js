@@ -34,6 +34,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", require("./routes/auth"));
 app.use("/appointments", require("./routes/appointment"));
+app.use("/admin", require("./routes/admin"));
 app.use("/doctors", require("./routes/doctors"));
 
 const PORT = process.env.PORT || 5000;

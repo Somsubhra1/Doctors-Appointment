@@ -7,6 +7,10 @@ const AppointmentsSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "user",
   },
+  // doctor: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "doctor",
+  // },
   email: {
     type: String,
     required: true,
