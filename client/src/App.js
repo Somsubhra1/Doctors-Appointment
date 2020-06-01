@@ -14,13 +14,17 @@ import {
 import Doctors from "./components/DoctorsList/Doctors";
 import Signup from "./components/Signup";
 import axios from "axios";
+import AddDoctor from "./components/Admin/AddDoctor";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      user: {},
+      user: {
+        // isAdmin: true,
+        // email: "sdfs",
+      },
     };
   }
 
@@ -41,11 +45,11 @@ class App extends Component {
     };
     try {
       const res = await axios.get("/auth/profile", config);
-      const { email, id, name } = res.data;
+      const { email, id, name, isAdmin } = res.data;
       const token = JSON.parse(localStorage.getItem("doctorsAppointmentUser"))
         .token;
 
-      this.setUser({ email, id, name, token });
+      this.setUser({ email, id, name, token, isAdmin });
     } catch (error) {
       if (error.response.status === 401) {
         localStorage.removeItem("doctorsAppointmentUser");
@@ -98,9 +102,20 @@ class App extends Component {
                   <Doctors
                     token={this.state.user.token}
                     email={this.state.user.email}
+                    isAdmin={this.state.user.isAdmin}
                   />
                 ) : (
                   <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/admin/adddoctor"
+              render={() =>
+                this.state.user.isAdmin ? (
+                  <AddDoctor />
+                ) : (
+                  <Redirect to="/home" />
                 )
               }
             />

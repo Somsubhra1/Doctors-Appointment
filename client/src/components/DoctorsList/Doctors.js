@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 import AppointmentModal from "./AppointmentModal";
 import axios from "axios";
+import _ from "lodash";
 
 export default class Doctors extends Component {
   constructor(props) {
@@ -28,7 +29,6 @@ export default class Doctors extends Component {
 
     try {
       const res = await axios.get("/doctors/list", config);
-      console.log(res.data);
       this.setState({ doctors: res.data, filteredDoctors: res.data });
     } catch (error) {
       document.getElementById("alert").classList.remove("d-none");
@@ -42,6 +42,30 @@ export default class Doctors extends Component {
       doctor.disease.toLowerCase().includes(search.toLowerCase())
     );
     this.setState({ filteredDoctors });
+  };
+
+  deleteDoctor = async (id) => {
+    const config = {
+      headers: {
+        Authorization: this.props.token,
+      },
+    };
+    try {
+      const res = await axios.delete(`/admin/doctors/delete/${id}`, config);
+      const { success } = res.data;
+      if (success) {
+        let docts = this.state.doctors;
+        let docToDelete = _.find(docts, _.matchesProperty("_id", id));
+        const newDocts = _.without(docts, docToDelete);
+        this.setState({
+          doctors: newDocts,
+          filteredDoctors: newDocts,
+        });
+      }
+    } catch (error) {
+      document.getElementById("alert").classList.remove("d-none");
+      document.getElementById("alert").innerText = "Error deleting doctor";
+    }
   };
 
   toggle = () => this.setState({ modal: !this.state.modal });
@@ -71,7 +95,7 @@ export default class Doctors extends Component {
           <ul className="list-group mt-4">
             {this.state.filteredDoctors.map((doctor) => {
               return (
-                <li className="list-group-item" key={doctor.id}>
+                <li className="list-group-item" key={doctor._id}>
                   Name: {doctor.name} <br /> Gender: {doctor.gender} <br />
                   Specialization: {doctor.disease}
                   <br />
@@ -87,6 +111,16 @@ export default class Doctors extends Component {
                   >
                     Appoint
                   </Button>
+                  {this.props.isAdmin ? (
+                    <Button
+                      onClick={(e) => this.deleteDoctor(doctor._id)}
+                      className="btn btn-danger mt-2 ml-2"
+                    >
+                      Delete
+                    </Button>
+                  ) : (
+                    ""
+                  )}
                 </li>
               );
             })}

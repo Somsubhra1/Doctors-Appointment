@@ -59,6 +59,15 @@ const NavBar = ({ user, setUser }) => {
             Appointments
           </NavLink>
         </li>
+        {user.isAdmin ? (
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/admin/adddoctor">
+              Add doctor
+            </NavLink>
+          </li>
+        ) : (
+          ""
+        )}
         <li className="nav-item">
           <NavLink className="nav-link" to="#">
             Welcome {user.name}
