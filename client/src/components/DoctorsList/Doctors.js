@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
 import AppointmentModal from "./AppointmentModal";
+import axios from "axios";
 
 export default class Doctors extends Component {
   constructor(props) {
@@ -18,18 +19,22 @@ export default class Doctors extends Component {
     this.getAllDoctors();
   }
 
-  getAllDoctors = () => {
-    fetch("./doctors.json")
-      .then((res) => res.json())
-      .then((data) =>
-        this.setState({
-          doctors: data,
-          filteredDoctors: data,
-        })
-      )
-      .catch((error) =>
-        console.log("There has been a problem with fetching doctors.")
-      );
+  getAllDoctors = async () => {
+    const config = {
+      headers: {
+        Authorization: this.props.token,
+      },
+    };
+
+    try {
+      const res = await axios.get("/doctors/list", config);
+      console.log(res.data);
+      this.setState({ doctors: res.data, filteredDoctors: res.data });
+    } catch (error) {
+      document.getElementById("alert").classList.remove("d-none");
+      document.getElementById("alert").innerText =
+        "Error fetching doctors list";
+    }
   };
 
   searchDoctors = (search) => {
@@ -45,6 +50,11 @@ export default class Doctors extends Component {
     return (
       <div>
         <div className="container mt-4">
+          <div
+            className="alert alert-danger d-none"
+            id="alert"
+            role="alert"
+          ></div>
           <form onSubmit={this.searchDoctors}>
             <div className="form-group">
               <label htmlFor="exampleInputEmail1">
