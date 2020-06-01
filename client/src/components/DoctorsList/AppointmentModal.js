@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import axios from "axios";
 
 const AppointmentModal = (props) => {
   const { doctorName, modal, toggle, email } = props;
@@ -9,9 +10,40 @@ const AppointmentModal = (props) => {
   const [illness, setIllness] = useState("");
   const [appointmentDate, setAppointmentDate] = useState("");
 
-  const submitAppointmentForm = (e) => {
+  const submitAppointmentForm = async (e) => {
     e.preventDefault();
-    console.log("Works");
+    const data = {
+      email,
+      doctorName,
+      patientName,
+      age,
+      gender,
+      date: appointmentDate,
+      description: illness,
+    };
+    const config = {
+      headers: {
+        Authorization: props.token,
+      },
+    };
+    try {
+      const res = await axios.post("/appointments/add", data, config);
+      if (Object.keys(res.data).length === 0) {
+        document.getElementById("alert").classList.remove("d-none");
+        document.getElementById("alert").innerText = "Error adding appointment";
+      } else {
+        alert("Added appointment successfully");
+      }
+      toggle();
+      setPatientName("Select Gender");
+      setAge(0);
+      setGender("Select Gender");
+      setIllness("");
+      setAppointmentDate("");
+    } catch (error) {
+      document.getElementById("alert").classList.remove("d-none");
+      document.getElementById("alert").innerText = error.response.data.error;
+    }
   };
 
   return (
@@ -20,6 +52,11 @@ const AppointmentModal = (props) => {
         <ModalHeader toggle={toggle}>Appointment for {doctorName}</ModalHeader>
         <ModalBody>
           <form onSubmit={submitAppointmentForm}>
+            <div
+              className="alert alert-danger d-none"
+              id="alert"
+              role="alert"
+            ></div>
             <div className="form-group">
               <label htmlFor="exampleInputEmail1">Email</label>
               <input

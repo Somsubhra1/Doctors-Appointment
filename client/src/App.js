@@ -95,7 +95,10 @@ class App extends Component {
               path="/doctors"
               render={() =>
                 Object.keys(this.state.user).length !== 0 ? (
-                  <Doctors email={this.state.user.email} />
+                  <Doctors
+                    token={this.state.user.token}
+                    email={this.state.user.email}
+                  />
                 ) : (
                   <Redirect to="/login" />
                 )

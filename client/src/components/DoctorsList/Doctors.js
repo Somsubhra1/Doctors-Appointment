@@ -87,6 +87,7 @@ export default class Doctors extends Component {
           modal={this.state.modal}
           toggle={this.toggle}
           email={this.props.email}
+          token={this.props.token}
         />
       </div>
     );
