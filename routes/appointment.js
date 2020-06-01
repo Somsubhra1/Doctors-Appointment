@@ -39,7 +39,7 @@ router.post(
     newAppointment
       .save()
       .then((appointment) => res.json(appointment))
-      .catch((err) => console.log("Unable to push Appointment to db: " + err));
+      .catch((err) => console.log(res.json({error: "Error adding appointment"})));
   }
 );
 
