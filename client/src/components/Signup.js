@@ -30,6 +30,7 @@ export default class Signup extends Component {
         name,
         email,
         password: password1,
+        isAdmin: false,
       });
       alert("Login now");
       this.setState({ toLogin: true });

@@ -20,8 +20,8 @@ export default class Login extends Component {
     // console.log("Login submitted", this.props.test);
     try {
       const res = await axios.post("/auth/login", { email, password });
-      const { name, id, token } = res.data;
-      const user = { email, name, id, token };
+      const { name, id, token, isAdmin } = res.data;
+      const user = { email, name, id, token, isAdmin };
       localStorage.setItem("doctorsAppointmentUser", JSON.stringify(user));
       this.props.setUser(user);
       this.setState({ toAppointments: true });
