@@ -141,7 +141,7 @@ router.patch(
           .then((user) => {
             res.json({ success: true });
           })
-          .catch((err) => console.log(err));
+          .catch((err) => res.json({ error: "Couldn't update password" }));
       });
     });
   }
