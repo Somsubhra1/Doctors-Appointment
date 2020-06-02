@@ -113,7 +113,7 @@ class App extends Component {
               path="/admin/adddoctor"
               render={() =>
                 this.state.user.isAdmin ? (
-                  <AddDoctor />
+                  <AddDoctor token={this.state.user.token} />
                 ) : (
                   <Redirect to="/home" />
                 )
