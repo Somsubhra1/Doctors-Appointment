@@ -60,10 +60,28 @@ const NavBar = ({ user, setUser }) => {
           </NavLink>
         </li>
         {user.isAdmin ? (
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/adddoctor">
-              Add doctor
-            </NavLink>
+          <li className="nav-item dropdown">
+            <a
+              className="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Admin
+            </a>
+            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <NavLink className="dropdown-item" exact to="/admin">
+                List Admins
+              </NavLink>
+              <NavLink className="dropdown-item" to="/admin/add">
+                Add Admins
+              </NavLink>
+              <NavLink className="dropdown-item" to="/admin/adddoctor">
+                Add Doctor
+              </NavLink>
+            </div>
           </li>
         ) : (
           ""

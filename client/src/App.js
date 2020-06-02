@@ -16,6 +16,8 @@ import Signup from "./components/Signup";
 import axios from "axios";
 import AddDoctor from "./components/Admin/AddDoctor";
 import Profile from "./components/Profile";
+import ListAdmins from "./components/Admin/ListAdmins";
+import AddAdmin from "./components/Admin/AddAdmin";
 
 class App extends Component {
   constructor(props) {
@@ -108,6 +110,23 @@ class App extends Component {
                 ) : (
                   <Redirect to="/login" />
                 )
+              }
+            />
+            <Route
+              path="/admin"
+              exact
+              render={() =>
+                this.state.user.isAdmin ? (
+                  <ListAdmins token={this.state.user.token} />
+                ) : (
+                  <Redirect to="/home" />
+                )
+              }
+            />
+            <Route
+              path="/admin/add"
+              render={() =>
+                this.state.user.isAdmin ? <AddAdmin /> : <Redirect to="/home" />
               }
             />
             <Route
