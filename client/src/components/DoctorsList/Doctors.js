@@ -74,6 +74,8 @@ export default class Doctors extends Component {
     return (
       <div>
         <div className="container mt-4">
+          <h1>Doctors List</h1>
+          <hr />
           <div
             className="alert alert-danger d-none"
             id="alert"

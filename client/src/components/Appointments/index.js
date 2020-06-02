@@ -115,6 +115,8 @@ class Appointments extends Component {
     return (
       <>
         <Container className="mt-4">
+          <h1>My Appointments</h1>
+          <hr />
           <div
             className="alert alert-danger d-none"
             id="alert"
