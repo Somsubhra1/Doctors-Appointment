@@ -15,6 +15,7 @@ import Doctors from "./components/DoctorsList/Doctors";
 import Signup from "./components/Signup";
 import axios from "axios";
 import AddDoctor from "./components/Admin/AddDoctor";
+import Profile from "./components/Profile";
 
 class App extends Component {
   constructor(props) {
@@ -116,6 +117,16 @@ class App extends Component {
                   <AddDoctor token={this.state.user.token} />
                 ) : (
                   <Redirect to="/home" />
+                )
+              }
+            />
+            <Route
+              path="/profile"
+              render={() =>
+                Object.keys(this.state.user).length !== 0 ? (
+                  <Profile user={this.state.user} />
+                ) : (
+                  <Redirect to="/login" />
                 )
               }
             />

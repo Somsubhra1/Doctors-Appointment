@@ -69,7 +69,7 @@ const NavBar = ({ user, setUser }) => {
           ""
         )}
         <li className="nav-item">
-          <NavLink className="nav-link" to="#">
+          <NavLink className="nav-link" style={{ color: "#FFF" }} to="/profile">
             Welcome {user.name}
           </NavLink>
         </li>
