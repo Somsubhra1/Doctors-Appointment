@@ -37,7 +37,9 @@ export default function Profile(props) {
   };
 
   return (
-    <div className="container">
+    <div className="container mt-4">
+      <h1>Update Profile</h1>
+      <hr/>
       <form className="mt-4" onSubmit={profileFormSubmit}>
         <div
           className="alert alert-danger d-none"
