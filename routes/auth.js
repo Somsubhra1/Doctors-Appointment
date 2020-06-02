@@ -123,6 +123,30 @@ router.get(
   }
 );
 
+router.patch(
+  "/profile/updatepassword",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    let { password } = req.body;
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(password, salt, (err, hash) => {
+        // Handling error
+        if (err) {
+          throw err;
+        }
+        password = hash;
+
+        // Storing to db
+        User.findByIdAndUpdate(req.user.id, { $set: { password } })
+          .then((user) => {
+            res.json({ success: true });
+          })
+          .catch((err) => console.log(err));
+      });
+    });
+  }
+);
+
 // /auth/logout route : POST (Authenticated)
 router.get(
   "/logout",
