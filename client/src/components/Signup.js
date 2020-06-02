@@ -46,10 +46,11 @@ export default class Signup extends Component {
     }
     return (
       <form className="container mt-4" onSubmit={this.submitSignupForm}>
+        <h1>Sign Up</h1>
+        <hr />
         <div
           className="alert alert-danger d-none"
           id="alert"
-          ref="alert"
           role="alert"
         ></div>
         <div className="form-group">

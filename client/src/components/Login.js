@@ -17,7 +17,6 @@ export default class Login extends Component {
     e.preventDefault();
     const { email, password } = this.state;
 
-    // console.log("Login submitted", this.props.test);
     try {
       const res = await axios.post("/auth/login", { email, password });
       const { name, id, token, isAdmin } = res.data;
@@ -37,13 +36,14 @@ export default class Login extends Component {
     }
     return (
       <form className="container mt-4" onSubmit={this.submitLoginForm}>
+        <h1>Login</h1>
+        <hr />
         <div
           className="alert alert-danger d-none"
           id="alert"
           ref="alert"
           role="alert"
-        >
-        </div>
+        ></div>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
           <input

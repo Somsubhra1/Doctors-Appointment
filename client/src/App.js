@@ -24,10 +24,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: {
-        // isAdmin: true,
-        // email: "sdfs",
-      },
+      user: {},
     };
   }
 
@@ -126,7 +123,11 @@ class App extends Component {
             <Route
               path="/admin/add"
               render={() =>
-                this.state.user.isAdmin ? <AddAdmin /> : <Redirect to="/home" />
+                this.state.user.isAdmin ? (
+                  <AddAdmin token={this.state.user.token} />
+                ) : (
+                  <Redirect to="/home" />
+                )
               }
             />
             <Route
