@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "reactstrap";
+import { Button, Container, Spinner } from "reactstrap";
 import AppointmentModal from "./AppointmentModal";
 import axios from "axios";
 import _ from "lodash";
@@ -13,6 +13,7 @@ export default class Doctors extends Component {
       modal: false,
       selectedDoctor: "",
       filteredDoctors: [],
+      loaded: false,
     };
   }
 
@@ -29,7 +30,11 @@ export default class Doctors extends Component {
 
     try {
       const res = await axios.get("/doctors/list", config);
-      this.setState({ doctors: res.data, filteredDoctors: res.data });
+      this.setState({
+        doctors: res.data,
+        filteredDoctors: res.data,
+        loaded: true,
+      });
     } catch (error) {
       document.getElementById("alert").classList.remove("d-none");
       document.getElementById("alert").innerText =
@@ -71,6 +76,29 @@ export default class Doctors extends Component {
   toggle = () => this.setState({ modal: !this.state.modal });
 
   render() {
+    if (!this.state.loaded) {
+      return (
+        <React.Fragment>
+          <Container
+            className="mt-4"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              height: "50vh",
+              alignItems: "center",
+            }}
+          >
+            <Spinner
+              animation="border"
+              role="status"
+              style={{ width: "3rem", height: "3rem" }}
+            >
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </Container>
+        </React.Fragment>
+      );
+    }
     return (
       <div>
         <div className="container mt-4">
@@ -94,39 +122,43 @@ export default class Doctors extends Component {
               />
             </div>
           </form>
-          <ul className="list-group mt-4">
-            {this.state.filteredDoctors.map((doctor) => {
-              return (
-                <li className="list-group-item" key={doctor._id}>
-                  Name: {doctor.name} <br /> Gender: {doctor.gender} <br />
-                  Specialization: {doctor.disease}
-                  <br />
-                  <Button
-                    onClick={(e) => {
-                      this.setState({
-                        selectedDoctor: e.target.getAttribute("data-doctor"),
-                      });
-                      this.toggle();
-                    }}
-                    className="btn btn-success mt-2"
-                    data-doctor={doctor.name}
-                  >
-                    Appoint
-                  </Button>
-                  {this.props.isAdmin ? (
+          {this.state.doctors.length === 0 ? (
+            <h3 className="mt-4">No doctors found</h3>
+          ) : (
+            <ul className="list-group mt-4">
+              {this.state.filteredDoctors.map((doctor) => {
+                return (
+                  <li className="list-group-item" key={doctor._id}>
+                    Name: {doctor.name} <br /> Gender: {doctor.gender} <br />
+                    Specialization: {doctor.disease}
+                    <br />
                     <Button
-                      onClick={(e) => this.deleteDoctor(doctor._id)}
-                      className="btn btn-danger mt-2 ml-2"
+                      onClick={(e) => {
+                        this.setState({
+                          selectedDoctor: e.target.getAttribute("data-doctor"),
+                        });
+                        this.toggle();
+                      }}
+                      className="btn btn-success mt-2"
+                      data-doctor={doctor.name}
                     >
-                      Delete
+                      Appoint
                     </Button>
-                  ) : (
-                    ""
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+                    {this.props.isAdmin ? (
+                      <Button
+                        onClick={(e) => this.deleteDoctor(doctor._id)}
+                        className="btn btn-danger mt-2 ml-2"
+                      >
+                        Delete
+                      </Button>
+                    ) : (
+                      ""
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
         <AppointmentModal
           doctorName={this.state.selectedDoctor}

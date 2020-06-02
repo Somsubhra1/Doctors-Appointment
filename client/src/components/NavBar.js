@@ -68,20 +68,24 @@ const NavBar = ({ user, setUser }) => {
         ) : (
           ""
         )}
-        <li className="nav-item">
+      </ul>
+      <ul className="ml-auto navbar-nav">
+        <li className="nav-item mr-2">
           <NavLink className="nav-link" style={{ color: "#FFF" }} to="/profile">
             Welcome {user.name}
           </NavLink>
         </li>
+        <li className="nav-item">
+          <NavLink
+            className="btn btn-danger ml-auto mr-4"
+            type="button"
+            onClick={logout}
+            to="/"
+          >
+            Logout
+          </NavLink>
+        </li>
       </ul>
-      <NavLink
-        className="btn btn-danger ml-auto mr-4"
-        type="button"
-        onClick={logout}
-        to="/"
-      >
-        Logout
-      </NavLink>
     </React.Fragment>
   );
   return (
