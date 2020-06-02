@@ -63,7 +63,7 @@ router.get(
     if (!req.user.isAdmin) {
       return res.status(401).json({ error: "You are not an admin" });
     }
-    User.find({ isAdmin: true })
+    User.find({ isAdmin: true }, ["name", "email", "_id", "isAdmin"])
       .then((users) => res.json(users))
       .catch((err) => console.log(err));
   }
