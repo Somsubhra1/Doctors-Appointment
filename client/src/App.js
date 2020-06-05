@@ -18,6 +18,7 @@ import AddDoctor from "./components/Admin/AddDoctor";
 import Profile from "./components/Profile";
 import ListAdmins from "./components/Admin/ListAdmins";
 import AddAdmin from "./components/Admin/AddAdmin";
+import NotFound from "./components/NotFound";
 
 class App extends Component {
   constructor(props) {
@@ -150,6 +151,7 @@ class App extends Component {
                 )
               }
             />
+            <Route component={NotFound} />
           </Switch>
 
           <Footer />
