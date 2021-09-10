@@ -1,4 +1,4 @@
-# Shopping List App
+# Doctors Appointment App
 
 Doctors Appointment app created on MERN stack.
 
